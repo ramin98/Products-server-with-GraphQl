@@ -13,22 +13,12 @@ const port = 3000;
 
 app.use(cors());
 
-const {
-  SHOPIFY_STORE_URL,
-  SHOPIFY_ACCESS_TOKEN,
-  DATABASE_PASSWORD,
-  DATABASE_NAME,
-  DATABASE_HOST,
-  DATABASE_USER_NAME,
-  DATABASE_PORT,
-} = process.env;
-
 const pool = new Pool({
-  user: DATABASE_USER_NAME,
-  host: DATABASE_HOST,
-  database: DATABASE_NAME,
-  password: DATABASE_PASSWORD,
-  port: DATABASE_PORT,
+  user: "postgres",
+  host: "localhost",
+  database: "mydb",
+  password: "ramin1998",
+  port: 5432,
 });
 
 pool.connect((err, client, release) => {
@@ -54,7 +44,7 @@ pool
 
 app.get("/", async (req, res) => {
   try {
-    const graphqlEndpoint = `https://${SHOPIFY_STORE_URL}/admin/api/2023-01/graphql.json`;
+    const graphqlEndpoint = `https://cpb-new-developer.myshopify.com/admin/api/2023-01/graphql.json`;
 
     const query = `
     {
@@ -80,7 +70,7 @@ app.get("/", async (req, res) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": SHOPIFY_ACCESS_TOKEN,
+        "X-Shopify-Access-Token": "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",
       },
       body: JSON.stringify({ query }),
     });
